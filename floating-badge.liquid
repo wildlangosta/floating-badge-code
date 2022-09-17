@@ -1,0 +1,222 @@
+{% style %}
+   .item1.floating-badge { 
+    display: flex; background-color: whitesmoke;
+    flex-direction: column; align-items: center; justify-content: space-between;
+    position: fixed; bottom: {{ section.settings.range_y }}%; 
+    right: {{ section.settings.range_x }}%; 
+    z-index: 9999999; 
+    margin-right: 10px; 
+    height:100px; 
+    width: 100px; 
+    border-radius: 10%; 
+    box-shadow: rgb(0 0 0 / 10%) 0px 2px 9px 4px; 
+    overflow: hidden; 
+    border:1px solid rgb(219, 219, 219); 
+}
+  .floating-badge-heading {
+    height: 30px; 
+    width: 100%; 
+    overflow: hidden; 
+    text-align:center;
+    background-color:{{section.settings.heading_bg_color}};
+    color:{{section.settings.heading_text_color}};
+    }
+  .thumbs-up {
+    display: flex; 
+    } 
+  .thumbs-up > svg {
+    height: 25px; 
+    }
+  .rating-container {
+    margin-bottom: -10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2px;
+    } 
+  .rating-number > p {
+    font-size: 15px;
+    color: #49b061;
+    font-weight: 600;
+ } 
+  .since-text {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+ } 
+  .since-text > p {
+    color:rgb(var(--color-foreground));
+    width: 100%;
+    text-align: center;
+    transform:scale(0.6);
+    font-size: 13px;
+    font-weight: 600;
+    } 
+    @media only screen and (max-width: 600px) {
+    .item1.floating-badge {
+        bottom: {{ section.settings.range_y_mob }}%;
+        right: {{ section.settings.range_x_mob }}%;
+        }
+    }
+
+{% endstyle %}
+
+{% unless section.settings.display_badge == false %}
+<a
+  style="text-decoration: none"
+  href="{{ section.settings.link_bob }}"
+  target="_blank"
+>
+  <div class="item1 floating-badge">
+    <div class="floating-badge-heading">
+      {% if section.settings.heading_text != blank %}
+      {{section.settings.section.settings.heading_text}}
+      {% else %}
+      <!-- Youtube Demo Purposes, delete if not required -->
+        Heading
+      {% endif %}
+      
+      
+    </div>
+    <div class="info-container">
+      <div class="rating-container">
+        <div class="thumbs-up">{% render 'icon-thumbs-up'%}</div>
+        <div class="rating-number">
+          <p style="margin: 0">
+            {% unless section.settings.rating_text == blank %}
+            {{ section.settings.rating_text }}% {% else %}
+            <!-- Youtube Demo Purposes, delete if not required -->
+            99% {% endunless %}
+          </p>
+        </div>
+      </div>
+
+      <div class="since-text">
+        <p style="margin: 0">
+          {% unless section.settings.trusted_text == blank %}
+          {{ section.settings.trusted_text }}: {% else %} Trusted since: {%
+          endunless %}
+
+          <br />
+          {% unless section.settings.date_text == blank %}
+          {{ section.settings.date_text }}
+          {% else %} 100 BC {% endunless %}
+        </p>
+      </div>
+    </div>
+  </div>
+</a>
+{% endunless %}
+
+{% schema %} 
+    { 
+        "name": "Floating Badge",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Badge Position Desktop"
+            },
+            {
+                "type": "checkbox",
+                "id": "display_badge",
+                "label": "Display Badge",
+                "default": true
+            },
+            {
+                "type": "range",
+                "id": "range_x",
+                "label": "Position X Axis",
+                "unit": "%",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "range_y",
+                "label": "Position Y Axis",
+                "unit": "%",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "default": 5
+            },
+            {
+                "type": "header",
+                "content": "Badge Position Mobile"
+            },
+            {
+                "type": "range",
+                "id": "range_x_mob",
+                "label": "Position X Axis",
+                "unit": "%",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "range_y_mob",
+                "label": "Position Y Axis",
+                "unit": "%",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "default": 5
+            },
+            {
+                "type": "header",
+                "content": "Link"
+            },
+            {
+                "type": "url",
+                "id": "link_bob",
+                "label": "Link for redirect"
+            },
+            {
+                "type": "header",
+                "content": "Text"
+            },
+            {
+                "type": "text",
+                "id": "heading_text",
+                "label": "Heading Text"
+            },
+            {
+                "type": "color",
+                "id": "heading_bg_color",
+                "label": "Heading Background",
+                "default": "#808080"
+            },
+            {
+                "type": "color",
+                "id": "heading_text_color",
+                "label": "Heading Text Color",
+                "default": "#ffffff"
+            },
+            {
+                "type": "text",
+                "id": "rating_text",
+                "label": "Rating Text"
+            },
+            {
+                "type": "text",
+                "id": "trusted_text",
+                "label": "Trusted Text"
+            },
+            {
+                "type": "text",
+                "id": "date_text",
+                "label": "Date Text"
+            }
+        ],
+        "presets": [
+            {
+                "name":"Floating Badge" 
+            } 
+        ] 
+    } 
+{% endschema %}
