@@ -1,0 +1,88 @@
+{%style%}
+.whatsapp-container {
+    position:fixed;
+    top:{{section.settings.position_top}}%;
+    left:{{section.settings.position_left}}%;
+    height:{{size}}px;
+    width:{{size}}px;
+    z-index: 9999999;
+}
+{%endstyle%}
+{% assign size = section.settings.icon_size %}
+<div class="whatsapp-container">
+    <div class="link_container">
+        <a href="https://wa.me/{{section.settings.phone_number | remove: ' '}}?text={{section.settings.whatsapp_message}}">
+            {% render 'icon-whatsapp-chat', size:size %}
+        </a>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Whatsapp Chat",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Position"
+            },
+            {
+                "type": "range",
+                "id": "position_top",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "%",
+                "label": "Position Top",
+                "default": 70
+            },
+            {
+                "type": "range",
+                "id": "position_left",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "%",
+                "label": "Position Left",
+                "default": 1
+            },
+            {
+                "type": "header",
+                "content": "Size"
+            },
+            {
+                "type": "range",
+                "id": "icon_size",
+                "min": 20,
+                "max": 80,
+                "step": 1,
+                "unit": "px",
+                "label": "Chat Icon Size",
+                "default": 50
+            },
+            {
+                "type": "header",
+                "content": "Phone Number"
+            },
+            {
+                "type": "text",
+                "id": "phone_number",
+                "label": "Whatsapp Phone Number",
+                "info": "Please ensure that your phone number includes the extension and is formatted as follows: 310633573020"
+            },
+            {
+                "type": "header",
+                "content": "Whatsapp Message"
+            },
+            {
+                "type": "text",
+                "id": "whatsapp_message",
+                "label": "Whatsapp Message"
+            }
+
+        ],
+        "presets":[
+            {
+                "name": "Whatsapp Chat"
+            }
+        ]
+    }
+{% endschema %}
